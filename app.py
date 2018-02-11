@@ -9,7 +9,7 @@ while True:
     face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
     eye_cascade = cv2.CascadeClassifier('haarcascade_eye.xml')
     # Our operations on the frame come here
-    grey =  cv2.cvtColor(img, cv.COLOR_BGR2GRAY)
+    grey =  cv2.cvtColor(im, cv.COLOR_BGR2GRAY)
     faces = face_cascade.detectMultiScale(gray, 1.3, 5)
     for (x,y,w,h) in faces:
         cv2.rectangle(im,(x,y),(x+w,y+h),(255,0,0),2)
