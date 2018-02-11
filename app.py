@@ -6,12 +6,20 @@ video = cv2.VideoCapture(0)
 while True:
     # Capture frame-by-frame
     ret, im = video.read()
-
+    face_cascade = cv.CascadeClassifier('haarcascade_frontalface_default.xml')
+    eye_cascade = cv.CascadeClassifier('haarcascade_eye.xml')
     # Our operations on the frame come here
-    ret, im2 = cv2.threshold(cv2.cvtColor(im, cv2.COLOR_BGR2GRAY), 100, 255, cv2.THRESH_BINARY)
-
+    grey =  cv.cvtColor(img, cv.COLOR_BGR2GRAY)
+    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+    for (x,y,w,h) in faces:
+        cv.rectangle(im,(x,y),(x+w,y+h),(255,0,0),2)
+        roi_gray = gray[y:y+h, x:x+w]
+        roi_color = im[y:y+h, x:x+w]
+        eyes = eye_cascade.detectMultiScale(roi_gray)
+        for (ex,ey,ew,eh) in eyes:
+            cv.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
     # Display the resulting frame
-    cv2.imshow("BlurMe", im2)
+    cv2.imshow("BlurMe", im)
     if cv2.waitKey(10) == 27:
         break
 
